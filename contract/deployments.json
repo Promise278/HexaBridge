@@ -1,0 +1,12 @@
+{
+  "network": "sepolia",
+  "timestamp": "2026-06-26T09:54:26.130Z",
+  "deployer": "0x205D9311C500cC1392AE2027F61F198fA0607642",
+  "contracts": {
+    "AddressReputation": "0xc2cfA8BB12a18b0d2C07a7B729995144b4B7b083",
+    "DomainRegistry": "0x7EFB73FF3C587531562c55C9E5EE93bA1349943D",
+    "PhishingRegistry": "0x8737B30105d553ad15Fb36891a32a5001a8Cd59c",
+    "TransactionValidator": "0x5dfABC5929f8E02403119ca356ED5648f3c0bd67",
+    "GovernanceController": "0x0D541fc45F9322a2872eC86Acf6dACAa14942Aab"
+  }
+}
