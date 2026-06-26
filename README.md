@@ -410,40 +410,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-## 🙏 Acknowledgments
-
-- **OpenZeppelin** - Secure smart contract libraries
-- **MetaMask** - Phishing domain list
-- **Hardhat** - Development environment
-- **React** - Frontend framework
-- **Vite** - Build tool
-
----
-
-## 📞 Support
-
-- **Documentation**: [https://docs.antiphishing.xyz](https://docs.antiphishing.xyz)
-- **Discord**: [https://discord.gg/antiphishing](https://discord.gg/antiphishing)
-- **Twitter**: [@Web3AntiPhishing](https://twitter.com/Web3AntiPhishing)
-- **Email**: support@antiphishing.xyz
-
----
-
-## 🗺️ Roadmap
-
-- [x] Core smart contracts
-- [x] Comprehensive test suite
-- [x] Web dashboard
-- [x] Browser extension MVP
-- [ ] Mobile app
-- [ ] Advanced ML threat detection
-- [ ] Multi-chain support
-- [ ] NFT-based reputation system
-- [ ] API for third-party integrations
-- [ ] Decentralized oracle integration
-
----
-
 ## ⚠️ Disclaimer
 
 This software is provided "as is", without warranty of any kind. Users should always verify transactions and addresses independently. The protocol maintainers are not responsible for any losses incurred through the use of this software.
@@ -483,7 +449,3 @@ Malicious transactions often include unlimited token approvals or transfers to k
 3. Detects unlimited approval patterns
 4. Validates transaction data against known scam signatures
 5. Risk scoring based on multiple factors
-
----
-
-Made with ❤️ by the Web3 Security Community
