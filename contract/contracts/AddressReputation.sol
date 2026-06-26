@@ -4,10 +4,6 @@ pragma solidity ^0.8.28;
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/utils/Pausable.sol";
 
-/**
- * @title AddressReputation
- * @notice Manages trusted-address registrations, risk scores, and poisoning detection.
- */
 contract AddressReputation is AccessControl, Pausable {
     bytes32 public constant SCORER_ROLE = keccak256("SCORER_ROLE");
 

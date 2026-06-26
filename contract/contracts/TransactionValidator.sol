@@ -5,10 +5,6 @@ import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/utils/Pausable.sol";
 import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
-/**
- * @title TransactionValidator
- * @notice Pre-flight transaction risk assessment with whitelist/blacklist.
- */
 contract TransactionValidator is AccessControl, Pausable, ReentrancyGuard {
     bytes32 public constant BLACKLIST_ADMIN_ROLE = keccak256("BLACKLIST_ADMIN_ROLE");
 

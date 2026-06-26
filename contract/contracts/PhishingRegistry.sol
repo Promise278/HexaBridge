@@ -5,28 +5,13 @@ import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/utils/Pausable.sol";
 import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
-/**
- * @title PhishingRegistry
- * @notice Core registry for reporting, validating, and tracking on-chain phishing threats.
- * @dev Uses role-based access control: REPORTER can submit, VALIDATOR can confirm/dismiss,
- *      ADMIN can manage roles and pause.
- */
 contract PhishingRegistry is AccessControl, Pausable, ReentrancyGuard {
-    // ──────────────────────────────────────────────────────────────
-    //  Roles
-    // ──────────────────────────────────────────────────────────────
     bytes32 public constant REPORTER_ROLE = keccak256("REPORTER_ROLE");
     bytes32 public constant VALIDATOR_ROLE = keccak256("VALIDATOR_ROLE");
 
-    // ──────────────────────────────────────────────────────────────
-    //  Enums
-    // ──────────────────────────────────────────────────────────────
     enum ThreatLevel { None, Low, Medium, High, Critical }
     enum ReportStatus { Pending, Confirmed, Dismissed }
 
-    // ──────────────────────────────────────────────────────────────
-    //  Structs
-    // ──────────────────────────────────────────────────────────────
     struct Report {
         uint256 id;
         address reporter;
@@ -39,9 +24,6 @@ contract PhishingRegistry is AccessControl, Pausable, ReentrancyGuard {
         uint256 dismissals;
     }
 
-    // ──────────────────────────────────────────────────────────────
-    //  State
-    // ──────────────────────────────────────────────────────────────
     mapping(uint256 => Report) private _reports;
     mapping(address => ThreatLevel) private _threatLevels;
     mapping(address => uint256[]) private _reportsByTarget;
@@ -51,9 +33,6 @@ contract PhishingRegistry is AccessControl, Pausable, ReentrancyGuard {
     uint256 public confirmationsRequired = 2;
     uint256 public dismissalsRequired = 2;
 
-    // ──────────────────────────────────────────────────────────────
-    //  Events
-    // ──────────────────────────────────────────────────────────────
     event PhishingReported(
         uint256 indexed reportId,
         address indexed reporter,
@@ -67,9 +46,6 @@ contract PhishingRegistry is AccessControl, Pausable, ReentrancyGuard {
     event ConfirmationsRequiredUpdated(uint256 oldValue, uint256 newValue);
     event DismissalsRequiredUpdated(uint256 oldValue, uint256 newValue);
 
-    // ──────────────────────────────────────────────────────────────
-    //  Errors
-    // ──────────────────────────────────────────────────────────────
     error ZeroAddress();
     error EmptyEvidence();
     error InvalidSeverity();
@@ -78,25 +54,13 @@ contract PhishingRegistry is AccessControl, Pausable, ReentrancyGuard {
     error AlreadyVoted();
     error InvalidThreshold();
 
-    // ──────────────────────────────────────────────────────────────
-    //  Constructor
-    // ──────────────────────────────────────────────────────────────
     constructor() {
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _grantRole(REPORTER_ROLE, msg.sender);
         _grantRole(VALIDATOR_ROLE, msg.sender);
     }
 
-    // ──────────────────────────────────────────────────────────────
-    //  Reporting
-    // ──────────────────────────────────────────────────────────────
 
-    /**
-     * @notice Submit a phishing report for a target address.
-     * @param target   The address being reported.
-     * @param severity The perceived threat severity (1-4, maps to Low-Critical).
-     * @param evidence A description or IPFS hash of supporting evidence.
-     */
     function reportPhishing(
         address target,
         ThreatLevel severity,
@@ -126,14 +90,7 @@ contract PhishingRegistry is AccessControl, Pausable, ReentrancyGuard {
         return reportId;
     }
 
-    // ──────────────────────────────────────────────────────────────
-    //  Validation
-    // ──────────────────────────────────────────────────────────────
 
-    /**
-     * @notice Confirm a pending report, escalating the target's threat level
-     *         once the confirmation threshold is met.
-     */
     function confirmReport(uint256 reportId)
         external
         onlyRole(VALIDATOR_ROLE)
@@ -158,9 +115,7 @@ contract PhishingRegistry is AccessControl, Pausable, ReentrancyGuard {
         }
     }
 
-    /**
-     * @notice Dismiss a pending report as a false positive.
-     */
+
     function dismissReport(uint256 reportId)
         external
         onlyRole(VALIDATOR_ROLE)
@@ -179,10 +134,6 @@ contract PhishingRegistry is AccessControl, Pausable, ReentrancyGuard {
             r.status = ReportStatus.Dismissed;
         }
     }
-
-    // ──────────────────────────────────────────────────────────────
-    //  Admin
-    // ──────────────────────────────────────────────────────────────
 
     function setConfirmationsRequired(uint256 value) external onlyRole(DEFAULT_ADMIN_ROLE) {
         if (value == 0) revert InvalidThreshold();
@@ -216,10 +167,6 @@ contract PhishingRegistry is AccessControl, Pausable, ReentrancyGuard {
         _unpause();
     }
 
-    // ──────────────────────────────────────────────────────────────
-    //  Views
-    // ──────────────────────────────────────────────────────────────
-
     function getReport(uint256 reportId) external view returns (Report memory) {
         if (reportId >= _reportCount) revert ReportNotFound();
         return _reports[reportId];
@@ -244,10 +191,6 @@ contract PhishingRegistry is AccessControl, Pausable, ReentrancyGuard {
     function hasVoted(uint256 reportId, address voter) external view returns (bool) {
         return _hasVoted[reportId][voter];
     }
-
-    // ──────────────────────────────────────────────────────────────
-    //  Internal
-    // ──────────────────────────────────────────────────────────────
 
     function _getValidReport(uint256 reportId) internal view returns (Report storage) {
         if (reportId >= _reportCount) revert ReportNotFound();

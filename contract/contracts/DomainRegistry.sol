@@ -4,10 +4,6 @@ pragma solidity ^0.8.28;
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/utils/Pausable.sol";
 
-/**
- * @title DomainRegistry
- * @notice On-chain domain verification, blocklisting, and similarity detection.
- */
 contract DomainRegistry is AccessControl, Pausable {
     bytes32 public constant REGISTRAR_ROLE = keccak256("REGISTRAR_ROLE");
     bytes32 public constant MODERATOR_ROLE = keccak256("MODERATOR_ROLE");

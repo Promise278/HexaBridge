@@ -4,10 +4,7 @@ pragma solidity ^0.8.28;
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
-/**
- * @title GovernanceController
- * @notice DAO-style governance for managing registry updates via proposals.
- */
+
 contract GovernanceController is AccessControl, ReentrancyGuard {
     bytes32 public constant PROPOSER_ROLE = keccak256("PROPOSER_ROLE");
 
